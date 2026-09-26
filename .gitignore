@@ -427,3 +427,8 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+## Agent artifacts and skills (kept local, never committed)
+.superpowers/
+docs/superpowers/
+

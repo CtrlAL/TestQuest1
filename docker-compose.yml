@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: homelibrary
+      POSTGRES_USER: library
+      POSTGRES_PASSWORD: library_dev
+    ports:
+      # Overriding POSTGRES_PORT also requires updating Port= in
+      # HomeLibrary/appsettings.Development.json and the test connection string.
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - homelibrary-data:/var/lib/postgresql
+      - ./HomeLibrary/Database:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "psql \"postgresql://library:library_dev@db/homelibrary\" -tAc 'select 1' | grep -q 1"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  homelibrary-data:
