@@ -1,0 +1,178 @@
+:root {
+    --fg: #1c1e21;
+    --muted: #5f6368;
+    --border: #d8dce0;
+    --accent: #14507d;
+    --bg-soft: #f6f7f8;
+    --danger: #a4262c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    color: var(--fg);
+    background: #fff;
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.container {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header */
+.navbar {
+    background: var(--bg-soft);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 3.25rem;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--fg);
+    text-decoration: none;
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link { color: var(--accent); text-decoration: none; }
+.nav-link:hover { text-decoration: underline; }
+
+/* Headings and text */
+h1 { font-size: 1.6rem; margin: 0 0 1rem; }
+h2 { font-size: 1.2rem; margin: 2rem 0 .75rem; }
+
+.breadcrumb { margin: 0 0 1.25rem; }
+.empty, .result-count, .hint { color: var(--muted); }
+.hint { display: block; margin-top: .35rem; font-size: .85rem; }
+code { background: var(--bg-soft); padding: .1rem .3rem; border-radius: 3px; }
+
+/* Status and validation */
+.status-message {
+    background: #e7f2ea;
+    border: 1px solid #9cc7a8;
+    border-radius: 4px;
+    padding: .6rem .9rem;
+    margin: 0 0 1.25rem;
+}
+
+.validation-summary:empty,
+.field-error:empty { display: none; }
+
+.validation-summary, .field-error {
+    color: var(--danger);
+    font-size: .9rem;
+}
+
+.validation-summary ul { margin: .25rem 0; padding-left: 1.1rem; }
+
+/* Search */
+.search-form {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.search-form input[type="search"] { flex: 1 1 22rem; }
+
+/* Book table */
+table.books {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.books th, table.books td {
+    text-align: left;
+    padding: .5rem .6rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+
+table.books th { font-size: .85rem; text-transform: uppercase; color: var(--muted); }
+table.books td.actions, table.books th:last-child { text-align: right; }
+
+/* Details */
+dl.book-fields {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: .35rem 1rem;
+    margin: 0 0 1.5rem;
+}
+
+dl.book-fields dt { color: var(--muted); }
+dl.book-fields dd { margin: 0; }
+
+/* Table of contents */
+ul.toc {
+    list-style: none;
+    margin: 0;
+    padding-left: 1.1rem;
+    border-left: 1px solid var(--border);
+}
+
+ul.toc > li { padding: .15rem 0; }
+ul.toc .toc-title { font-weight: 500; }
+
+/* Forms */
+.field { margin-bottom: 1rem; }
+.field label { display: block; font-weight: 500; margin-bottom: .25rem; }
+.field.checkbox label { font-weight: normal; }
+
+.field input[type="text"],
+.field input[type="number"],
+.field input[type="search"],
+textarea {
+    width: 100%;
+    padding: .45rem .55rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font: inherit;
+}
+
+.field.checkbox input { width: auto; margin-right: .4rem; }
+textarea { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .9rem; }
+
+button, .form-actions a {
+    font: inherit;
+    padding: .45rem .9rem;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover, .form-actions a:hover { filter: brightness(1.1); }
+
+button.danger { background: var(--danger); border-color: var(--danger); }
+.form-actions { display: flex; gap: .75rem; align-items: center; }
+
+.new-book { margin-top: 1.5rem; }
+
+/* Footer */
+.footer {
+    margin-top: 3rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: .9rem;
+}

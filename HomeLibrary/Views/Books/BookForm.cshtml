@@ -1,0 +1,75 @@
+@model BookFormModel
+@{
+    var isEdit = Model.Id != 0;
+    ViewData["Title"] = isEdit ? "Изменить книгу" : "Новая книга";
+}
+
+<h1>@(isEdit ? "Изменить книгу" : "Новая книга")</h1>
+
+<form method="post" asp-controller="Books" asp-action="@(isEdit ? "Edit" : "Create")" asp-route-id="@(isEdit ? Model.Id : null)">
+    <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+    <div class="field">
+        <label asp-for="Title">Название</label>
+        <input asp-for="Title" />
+        <span asp-validation-for="Title" class="field-error"></span>
+    </div>
+
+    <div class="field">
+        <label asp-for="Author">Автор</label>
+        <input asp-for="Author" />
+        <span asp-validation-for="Author" class="field-error"></span>
+    </div>
+
+    <div class="field">
+        <label asp-for="PublicationYear">Год издания</label>
+        <input asp-for="PublicationYear" type="number" />
+        <span asp-validation-for="PublicationYear" class="field-error"></span>
+    </div>
+
+    <div class="field">
+        <label asp-for="Isbn">ISBN</label>
+        <input asp-for="Isbn" />
+        <span asp-validation-for="Isbn" class="field-error"></span>
+    </div>
+
+    <div class="field">
+        <label asp-for="Genre">Жанр</label>
+        <input asp-for="Genre" />
+        <span asp-validation-for="Genre" class="field-error"></span>
+    </div>
+
+    <div class="field">
+        <label asp-for="Publisher">Издательство</label>
+        <input asp-for="Publisher" />
+        <span asp-validation-for="Publisher" class="field-error"></span>
+    </div>
+
+    <div class="field">
+        <label asp-for="PageCount">Страниц</label>
+        <input asp-for="PageCount" type="number" />
+        <span asp-validation-for="PageCount" class="field-error"></span>
+    </div>
+
+    <div class="field checkbox">
+        <label asp-for="ReadStatus">
+            <input asp-for="ReadStatus" type="checkbox" />
+            Прочитано
+        </label>
+    </div>
+
+    <div class="field">
+        <label asp-for="TocXml">Оглавление (XML)</label>
+        <textarea asp-for="TocXml" rows="12"></textarea>
+        <span asp-validation-for="TocXml" class="field-error"></span>
+        <small class="hint">
+            Корневой элемент <code>toc</code>, внутри — только <code>section</code> с единственным
+            атрибутом <code>level</code> (1–6) и первым дочерним <code>title</code>.
+        </small>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit">Сохранить</button>
+        <a asp-controller="Books" asp-action="Index">Отмена</a>
+    </div>
+</form>

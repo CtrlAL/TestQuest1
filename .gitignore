@@ -431,4 +431,7 @@ FodyWeavers.xsd
 ## Agent artifacts and skills (kept local, never committed)
 .superpowers/
 docs/superpowers/
+opencode.json
+.opencode/
+*.mcp.json
 

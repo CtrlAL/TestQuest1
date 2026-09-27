@@ -1,0 +1,65 @@
+@model BookDetailsViewModel
+@{
+    ViewData["Title"] = Model.Book.Title;
+}
+
+<h1>@Model.Book.Title</h1>
+
+<p class="breadcrumb"><a asp-controller="Books" asp-action="Index">← К списку</a></p>
+
+<dl class="book-fields">
+    <dt>Автор</dt>
+    <dd>@Model.Book.Author</dd>
+    <dt>Год издания</dt>
+    <dd>@Model.Book.PublicationYear</dd>
+    <dt>ISBN</dt>
+    <dd>@(Model.Book.Isbn ?? "—")</dd>
+    <dt>Жанр</dt>
+    <dd>@(Model.Book.Genre ?? "—")</dd>
+    <dt>Издательство</dt>
+    <dd>@(Model.Book.Publisher ?? "—")</dd>
+    <dt>Страниц</dt>
+    <dd>@(Model.Book.PageCount?.ToString() ?? "—")</dd>
+    <dt>Прочитано</dt>
+    <dd>@(Model.Book.ReadStatus ? "да" : "нет")</dd>
+    <dt>Добавлено</dt>
+    <dd>@Model.Book.AddedAt.ToString("yyyy-MM-dd HH:mm")</dd>
+</dl>
+
+<p class="actions">
+    <a asp-controller="Books" asp-action="Edit" asp-route-id="@Model.Book.Id">Изменить</a>
+</p>
+
+<h2>Оглавление</h2>
+
+@if (Model.Sections.Count == 0)
+{
+    <p class="empty">Оглавление не заполнено.</p>
+}
+else
+{
+    @await Html.PartialAsync("_TocTree", Model.Sections)
+}
+
+<h2>Редактировать оглавление</h2>
+
+<form method="post" asp-controller="Books" asp-action="EditToc" asp-route-id="@Model.Book.Id">
+    @* Ошибка разбора оглавления приходит в ModelState по ключу "TocXml"
+       (BooksController.EditToc). Поле textarea намеренно не asp-for,
+       поэтому читаем ошибку по этому ключу явно, а не через
+       validation-summary. *@
+    @Html.ValidationMessage("TocXml", null, new { @class = "field-error" })
+    <div class="field">
+        <textarea name="tocXml" rows="10" aria-label="Оглавление XML">@Model.TocForm.TocXml</textarea>
+    </div>
+    <div class="form-actions">
+        <button type="submit">Сохранить оглавление</button>
+    </div>
+</form>
+
+<h2>Удаление</h2>
+
+<form method="post" asp-controller="Books" asp-action="Delete" asp-route-id="@Model.Book.Id"
+      onsubmit="return confirm('Удалить книгу «@Model.Book.Title»?');">
+    <button type="submit" class="danger">Удалить книгу</button>
+</form>

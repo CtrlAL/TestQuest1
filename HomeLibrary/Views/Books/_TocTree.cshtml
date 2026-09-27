@@ -1,0 +1,20 @@
+@model IReadOnlyList<TocSection>
+@{
+    // Рекурсивный partial: секции верхнего уровня получают Children того же
+    // типа, поэтому partial вызывает сам себя. Переменная цикла названа
+    // tocSection, а не section: "section" - зарезервированная директива
+    // Razor (@section) и как идентификатор не компилируется.
+}
+
+<ul class="toc">
+    @foreach (var tocSection in Model)
+    {
+        <li>
+            <span class="toc-title">@tocSection.Title</span>
+            @if (tocSection.Children.Length > 0)
+            {
+                @await Html.PartialAsync("_TocTree", (IReadOnlyList<TocSection>)tocSection.Children)
+            }
+        </li>
+    }
+</ul>

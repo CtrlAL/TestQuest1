@@ -12,8 +12,18 @@ var connectionString = builder.Configuration.GetConnectionString("HomeLibrary")
 builder.Services.AddSingleton(_ => NpgsqlDataSource.Create(connectionString));
 builder.Services.AddScoped<IBookRepository, NpgsqlBookRepository>();
 builder.Services.AddSingleton<ITocService, TocService>();
+builder.Services.AddScoped<DatabaseSeeder>();
 
 var app = builder.Build();
+
+// Демо-данные нужны только при локальной разработке. В Production загрузчик
+// выключен, иначе приложение молча наполнило бы боевую базу вымышленными
+// книгами. Флаг в конфигурации позволяет включить его явно.
+if (app.Configuration.GetValue("Seeding:Enabled", app.Environment.IsDevelopment()))
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    await scope.ServiceProvider.GetRequiredService<DatabaseSeeder>().SeedAsync();
+}
 
 app.UseExceptionHandler("/error");
 app.UseStaticFiles();
